@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Throwable;
@@ -58,7 +59,10 @@ class Handler extends ExceptionHandler
              
               return redirect()->route('login');
            }
-         }
+        }
+        if($exception instanceof AuthorizationException) {
+            return redirect()->back()->with('error',__('admin.not_allowed'));
+        }
         return parent::render($request, $exception);
     }
 }

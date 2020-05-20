@@ -90,4 +90,13 @@ class UserPolicy
     {
         return ($user->hasPermissions('user-delete') || $user->id==$model->id);
     }
+
+    /**
+     * Can go to admin dashboard or not
+     * @param \App\User $user
+     * @return mixed
+     */
+    public function viewDashboard(User $user) {
+        return $user->hasPermissions('view-dashboard');   
+    }
 }

@@ -36,21 +36,14 @@
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
           <h6 class="collapse-header">{{ __('admin.user_management') }}:</h6>
-          
-          @can('viewAny', App\User::class)
           <a class="collapse-item {{ request()->routeIs('admin.users.index')?'active':'' }}" href="{{ route('admin.users.index') }}">{{ __('admin.list') }}</a>
-          @endcan
 
-          @can('create',App\User::class)
           <a class="collapse-item {{ request()->routeIs('admin.users.create')?'active':'' }}" href="{{ route('admin.users.create') }}">{{ __('admin.user_create') }}</a>
-          @endcan
 
           <div class="collapse-divider"></div>
           <h6 class="collapse-header">{{ __('admin.user_group') }}:</h6>
-          
-          @can('viewAny', App\Group::class)
+
           <a class="collapse-item {{ request()->routeIs('admin.groups.index')?'active':'' }}" href="{{ route('admin.groups.index') }}">{{ __('admin.user_group') }}</a>
-          @endcan
           
           <a class="collapse-item {{ request()->routeIs('admin.groups.create')?'active':'' }}" href="{{ route('admin.groups.create') }}">{{ __('admin.group_create') }}</a>
           <div class="collapse-divider"></div>
@@ -68,7 +61,7 @@
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
         <i class="fas fa-fw fa-blog"></i>
-        <span>{{ __('admin.blog') }}</span>
+        <span>{{ __('admin.post') }}</span>
       </a>
       <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
@@ -76,12 +69,45 @@
           <a class="collapse-item" href="{{ route('admin.categories.index') }}">{{ __('admin.category_list') }}</a>
           <a class="collapse-item" href="{{ route('admin.categories.create') }}">{{ __('admin.category_create') }}</a>
 
-          <h6 class="collapse-header">{{ __('admin.blog') }}:</h6>          
+          <h6 class="collapse-header">{{ __('admin.post') }}:</h6>          
           <a class="collapse-item" href="{{ route('admin.posts.index') }}">{{ __('admin.post_list') }}</a>
           <a class="collapse-item" href="{{ route('admin.posts.create') }}">{{ __('admin.post_create') }}</a>
         </div>
       </div>
     </li>
+
+    @if(config('app.shop_enabled'))
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProduct">
+        <i class="fas fa-fw fa-shopping-cart"></i>
+        <span>{{ __('admin.shop') }}</span>
+      </a>
+      <div id="collapseProduct" class="collapse" aria-labelledby="headingProduct" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">{{ __('admin.product_category') }}:</h6>
+          <a class="collapse-item" href="{{ route('admin.productcategories.index') }}">{{ __('admin.category_list') }}</a>
+          <a class="collapse-item" href="{{ route('admin.productcategories.create') }}">{{ __('admin.category_create') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.product') }}:</h6>          
+          <a class="collapse-item" href="{{ route('admin.products.index') }}">{{ __('admin.product_list') }}</a>
+          <a class="collapse-item" href="{{ route('admin.products.create') }}">{{ __('admin.product_create') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.orders') }}:</h6>          
+          <a class="collapse-item" href="#">{{ __('admin.orders') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.customers') }}:</h6>          
+          <a class="collapse-item" href="#">{{ __('admin.customers') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.reports') }}:</h6>          
+          <a class="collapse-item" href="#">{{ __('admin.reports') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.shop_settings') }}:</h6>          
+          <a class="collapse-item" href="#">{{ __('admin.settings') }}</a>
+
+        </div>
+      </div>
+    </li>
+    @endif
 
     <!-- Divider -->
     <hr class="sidebar-divider">

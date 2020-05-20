@@ -18,7 +18,7 @@ class PostPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->hasPermissions('post-viewAny');
+        return ($user->hasPermissions('post-viewAny') || $user->posts->count()>0);
     }
 
     /**
@@ -53,7 +53,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
-        return ($user->hasPermissions('post-create') || $user->id==$post->user_id);
+        return ($user->hasPermissions('post-update') || $user->id==$post->user_id);
     }
 
     /**

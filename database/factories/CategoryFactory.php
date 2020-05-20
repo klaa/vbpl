@@ -10,6 +10,7 @@ $factory->define(Category::class, function (Faker $faker) {
         'published' => 1,
         'parent_id' => 0,
         'category_type' => $faker->randomElement(['post','product']),
-        'ordering'  => $faker->randomDigit,    
+        'ordering'  => $faker->randomDigit,
+        'alias'     => $faker->unique()->slug,    
     ];
 });

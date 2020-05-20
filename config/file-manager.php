@@ -120,7 +120,7 @@ return [
      *
      * whitelist - Deny anything(access - 0 - deny), that not allowed by the ACL rules list
      */
-    'aclStrategy' => 'blacklist',
+    'aclStrategy' => 'whitelist',
 
     /**
      * ACL Rules cache

@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group col">
                     <label for="formAlias">{{ __('admin.alias') }}</label>
-                    <input type="text" name="alias" value="{{ $category->category_details->first()->alias }}" class="form-control @error('alias') is-invalid @enderror" id="formAlias" aria-describedby="aliasHelp">
+                    <input type="text" name="alias" value="{{ $category->alias }}" class="form-control @error('alias') is-invalid @enderror" id="formAlias" aria-describedby="aliasHelp">
                     {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
                 </div>
             </div>

@@ -17,7 +17,6 @@ class CreatePostDetailsTable extends Migration
             $table->unsignedBigInteger('post_id');
             $table->char('language');
             $table->string('name');
-            $table->string('alias')->unique();
             $table->text('body');
             $table->string('keywords')->nullable();
             $table->text('desc')->nullable();

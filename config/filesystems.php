@@ -64,6 +64,13 @@ return [
             'endpoint' => env('AWS_URL'),
         ],
 
+        'google' => [
+            'driver'    => 'google',
+            'key'       => env('GOOGLE_KEY'),
+            'secret'    => env('GOOGLE_SECRET'),
+            'folder'    => env('GOOGLE_FOLDER'),
+        ]
+
     ],
 
     /*

@@ -51,7 +51,7 @@ class PermissionController extends Controller
             'name'      => ['required'],
             'alias'     => ['unique:permissions'],
         ]);
-        $item = new Permission($request->only(['name','alias']));
+        $item = new Permission($request->only(['name','alias','type']));
         if($item->save()) {
             $item->groups()->sync($request->groups);
             $msg = __('admin.update_permission_success');
@@ -108,7 +108,7 @@ class PermissionController extends Controller
             'name'      => ['required'],
             'alias'     => ['unique:groups,alias,'.$permission->id],
         ]);
-        if($permission->update($request->only(['name','alias']))) {
+        if($permission->update($request->only(['name','alias','type']))) {
             $permission->groups()->sync($request->groups);
             $msg = __('admin.update_group_success');
             $msg_type = 'success';
@@ -151,7 +151,7 @@ class PermissionController extends Controller
      */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = Permission::get(['id','name','alias'])->map(function($item) {
+        $items = Permission::get()->map(function($item) {
             $name   = '<a href="'.route('admin.permissions.edit',$item).'">'.$item->name.'</a>';
             $alias  = '<a href="'.route('admin.permissions.edit',$item).'">'.$item->alias.'</a>';
             $action = '<a href="'.route('admin.permissions.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.permissions.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';

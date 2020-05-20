@@ -41,6 +41,19 @@
                 </div>
             </div>
             <div class="form-row">
+                <div class="form-group col">
+                    <label for="itemType">{{ __('admin.permission_type') }}</label>
+                    <select name="type" id="itemType" class="form-control">
+                        <option value="dashboard" @if($permission->type=='dashboard') selected @endif>{{ __('admin.dashboard') }}</option>
+                        <option value="post" @if($permission->type=='post') selected @endif>{{ __('admin.post') }}</option>
+                        <option value="category" @if($permission->type=='category') selected @endif>{{ __('admin.post_category') }}</option>
+                        <option value="user" @if($permission->type=='user') selected @endif>{{ __('admin.user') }}</option>
+                        <option value="group" @if($permission->type=='group') selected @endif>{{ __('admin.user_group') }}</option>
+                        <option value="permission" @if($permission->type=='permission') selected @endif>{{ __('admin.group_permission') }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="col-12">
                     <label>{{ __('admin.group_permission') }}</label>
                 </div>

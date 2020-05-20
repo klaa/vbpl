@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Http\Controllers\Controller;
+use App\Media;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,7 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('category_details')->where([['published','=',1],['category_type','=','post']])->get();
+        $categories = Category::with('category_details')->where([['published','=',1]])->get();
         return view('admin.posts.create',compact('categories'));
     }
 
@@ -48,18 +49,20 @@ class PostController extends Controller
         if(empty($request->alias)) {            
             $request->merge(['alias'=>Str::slug($request->name)]);
         }
-        if(empty($request->user_id)) {            
+        if(empty($request->user_id)) {
             $request->merge(['user_id'=>auth()->user()->id]);
         }
-        $request->merge(['language'=>'vn']);
-        $validatedData = $request->validate([
-            'name'      => ['required'],
-            'alias'     => ['required','unique:post_details'],
-            'body'      => ['required'],
-        ]);
-        $post = new Post($request->only(['category_id','published','user_id','is_featured','ordering']));
+        $request->merge(['post_type'=>'post','language'=>'vn']);
+        $post = new Post();
+        $validatedData = $request->validate($post->ruleForCreating());
+        $post->__construct($request->only(['category_id','alias' ,'published','user_id','post_type','is_featured','ordering']));
         if($post->save()) {
-            $post->post_details()->create($request->only(['name','alias','body','desc','keywords','title','language']));
+            $post->post_details()->create($request->only(['name','body','desc','keywords','title','language']));
+            foreach ($request->get('medialist') as $key => $value) {
+                $media = new Media;
+                $media->link = $value;
+                $post->media()->save($media);
+            }
             $msg = __('admin.update_post_success');
             $msg_type = 'success';
         }else{
@@ -110,17 +113,20 @@ class PostController extends Controller
         if(empty($request->alias)) {            
             $request->merge(['alias'=>Str::slug($request->name)]);
         }
-        if(empty($request->user_id)) {            
-            $request->merge(['user_id'=>auth()->user()->id]);
-        }
         $request->merge(['language'=>'vn']);
-        $validatedData = $request->validate([
-            'name'      => ['required'],
-            'alias'     => ['required','unique:post_details,alias,'.$post->id.',post_id'],
-            'body'      => ['required'],
-        ]);
-        if($post->update($request->only(['category_id','published','user_id','is_featured','ordering']))) {
-            $post->post_details()->update($request->only(['name','alias','body','desc','keywords','title','language']));
+
+        $validatedData = $request->validate($post->ruleForEditting());
+        
+        if($post->update($request->only(['category_id','alias', 'published','is_featured','ordering']))) {
+            $post->post_details()->update($request->only(['name','body','desc','keywords','title','language']));
+            
+            $post->media()->delete();
+            foreach ($request->get('medialist') as $key => $value) {
+                $media = new Media;
+                $media->link = $value;
+                $post->media()->save($media);
+            }
+            
             $msg = __('admin.update_post_success');
             $msg_type = 'success';
         }else{
@@ -161,17 +167,23 @@ class PostController extends Controller
      * @return JSON 
      */
     public function getDatatable() {
-        $this->authorize('viewAny',auth()->user());
-        $items = Post::with('post_details')->get(['id','published'])->map(function($item) {
+        $user = auth()->user();
+        $params = [];
+        if($user->hasRole('super-user')==false) {
+            if($user->hasPermissions('post-viewAny')==false && $user->has('posts','>',0)) {
+                $params[] = ['user_id','=',$user->id];
+            }    
+        }
+        $items = Post::where($params)->with('post_details')->get();
+        $items = $items->map(function($item) {
             $name   = '<a href="'.route('admin.posts.edit',$item).'">'.$item->post_details->first()->name.'</a>';
-            $alias  = $item->post_details->first()->alias;
             if($item->published) {
                 $pbtn = '<a href="'.route('admin.posts.publish',$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
             }else{
                 $pbtn = '<a href="'.route('admin.posts.publish',$item).'" class="text-danger"><i class="far fa-times-circle"></i></a>';
             }
             $action = '<a href="'.route('admin.posts.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.posts.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';
-            return [$item->id,$name,$alias,$pbtn,$action];
+            return [$item->id,$name,$item->ordering,$pbtn,$action];
         });
         $response = new stdClass;
         $response->data = $items;
@@ -184,7 +196,6 @@ class PostController extends Controller
      * @return View
      */
     public function publish(Post $post) {
-        $this->authorize('update',auth()->user()); 
         if($post->published) {
             $post->published = 0;
         }else{

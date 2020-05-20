@@ -152,7 +152,7 @@ class GroupController extends Controller
      */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = Group::with('users')->get(['id','name','alias'])->map(function($item) {
+        $items = Group::with('users')->get()->map(function($item) {
             $name   = '<a href="'.route('admin.groups.edit',$item).'">'.$item->name.'</a>';
             $memberNo  = $item->users->count();
             $action = '<a href="'.route('admin.groups.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.groups.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';

@@ -40,6 +40,19 @@
                 </div>
             </div>
             <div class="form-row">
+                <div class="form-group col">
+                    <label for="itemType">{{ __('admin.permission_type') }}</label>
+                    <select name="type" id="itemType" class="form-control">
+                        <option value="dashboard">{{ __('admin.dashboard') }}</option>
+                        <option value="post">{{ __('admin.post') }}</option>
+                        <option value="category">{{ __('admin.post_category') }}</option>
+                        <option value="user">{{ __('admin.user') }}</option>
+                        <option value="group">{{ __('admin.user_group') }}</option>
+                        <option value="permission">{{ __('admin.group_permission') }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
                 <div class="col-12">
                     <label>{{ __('admin.group_permission') }}</label>
                 </div>

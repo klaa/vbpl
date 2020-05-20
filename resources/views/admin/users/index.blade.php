@@ -11,6 +11,7 @@
             $('#dataTable').DataTable({
                 "ajax": "{{ route('admin.users.datatable') }}",
                 "deferRender": true,
+                "order": [],
                 "language": {
                                 "decimal":        "",
                                 "emptyTable":     "{{ __('admin.no_data') }}",

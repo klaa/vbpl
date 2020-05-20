@@ -17,9 +17,11 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id')->default(0);
             $table->string('category_type');
+            $table->string('alias');
             $table->tinyInteger('published')->default(1);
             $table->integer('ordering')->default(0);
             $table->timestamps();
+            $table->unique(['category_type','alias']);
         });
     }
 

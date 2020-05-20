@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Category;
-use App\Exceptions\Handler;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -54,9 +53,9 @@ class CategoryController extends Controller
             'alias'     => ['required','unique:category_details'],
         ]);
         
-        $category = new Category($request->only(['parent_id','published','category_type']));
+        $category = new Category($request->only(['parent_id','alias','published','category_type']));
         if($category->save()) {
-            $category->category_details()->create($request->only(['name','alias','desc','keywords','title','language']));
+            $category->category_details()->create($request->only(['name','desc','keywords','title','language']));
             $msg = __('admin.update_category_success');
             $msg_type = 'success';
         }else{
@@ -115,8 +114,8 @@ class CategoryController extends Controller
             'alias'     => ['required','unique:category_details,alias,'.$category->id.',category_id'],
         ]);
  
-        if($category->update($request->only(['parent_id','published','category_type']))) {
-            $category->category_details()->update($request->only(['name','alias','desc','keywords','title','language']));
+        if($category->update($request->only(['parent_id','alias','published','category_type']))) {
+            $category->category_details()->update($request->only(['name','desc','keywords','title','language']));
             $msg = __('admin.update_category_success');
             $msg_type = 'success';
         }else{
@@ -158,16 +157,15 @@ class CategoryController extends Controller
      */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = Category::with('category_details')->where([['category_type','post']])->get(['id','published'])->map(function($item) {
+        $items = Category::with('category_details')->where([['category_type','post']])->get()->map(function($item) {
             $name   = '<a href="'.route('admin.categories.edit',$item).'">'.$item->category_details->first()->name.'</a>';
-            $alias  = $item->category_details->first()->alias;
             if($item->published) {
                 $pbtn = '<a href="'.route('admin.categories.publish',$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
             }else{
                 $pbtn = '<a href="'.route('admin.categories.publish',$item).'" class="text-danger"><i class="far fa-times-circle"></i></a>';
             }
             $action = '<a href="'.route('admin.categories.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.categories.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';
-            return [$item->id,$name,$alias,$pbtn,$action];
+            return [$item->id,$name,$item->ordering,$pbtn,$action];
         });
         $response = new stdClass;
         $response->data = $items;

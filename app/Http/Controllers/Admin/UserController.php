@@ -177,7 +177,7 @@ class UserController extends Controller
     */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = User::with('groups')->get(['id','name','email','published'])->map(function($item) {
+        $items = User::with('groups')->get()->map(function($item) {
             $group  = $item->groups->implode('name',', ');
             $name   = '<a href="'.route('admin.users.edit',$item).'">'.$item->name.'</a>';
             $email  = '<a href="'.route('admin.users.edit',$item).'">'.$item->email.'</a>';

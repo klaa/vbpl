@@ -11,6 +11,7 @@
             $('#dataTable').DataTable({
                 "ajax": "{{ route('admin.categories.datatable') }}",
                 "deferRender": true,
+                "order": [],
                 "language": {
                                 "decimal":        "",
                                 "emptyTable":     "{{ __('admin.no_data') }}",
@@ -67,7 +68,7 @@
                         <tr>
                             <th>ID</th>
                             <th>{{ __('admin.name') }}</th>
-                            <th>{{ __('admin.alias') }}</th>
+                            <th>{{ __('admin.ordering') }}</th>
                             <th>{{ __('admin.published') }}</th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>
@@ -76,7 +77,7 @@
                         <tr>
                             <th>ID</th>
                             <th>{{ __('admin.name') }}</th>
-                            <th>{{ __('admin.alias') }}</th>
+                            <th>{{ __('admin.ordering') }}</th>
                             <th>{{ __('admin.published') }}</th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>

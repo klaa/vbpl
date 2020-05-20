@@ -15,12 +15,15 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('alias');
+            $table->string('post_type');
             $table->unsignedBigInteger('category_id');
-            $table->tinyInteger('published')->default(1);
+            $table->tinyInteger('published')->default(1);            
             $table->unsignedBigInteger('user_id');
             $table->tinyInteger('is_featured')->default(0);
             $table->integer('ordering')->default(0);
             $table->timestamps();
+            $table->unique(['alias','post_type']);
         });
     }
 

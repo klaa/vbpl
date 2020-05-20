@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'group_id' => 1,
         ]);
 
-        factory(\App\User::class,100)->create()->each(function($item) {
+        factory(\App\User::class,20)->create()->each(function($item) {
             $item->groups()->sync([rand(1,4)]);
         });
     }

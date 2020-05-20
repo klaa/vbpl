@@ -17,7 +17,6 @@ class CreateCategoryDetailsTable extends Migration
             $table->unsignedBigInteger('category_id');
             $table->string('language');
             $table->string('name');
-            $table->string('alias')->unique();
             $table->text('desc')->nullable();
             $table->string('keywords')->nullable();            
             $table->string('title')->nullable();            
