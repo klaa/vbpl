@@ -20,7 +20,7 @@
 @endsection
 
 @section('content')
-<form action="{{ route('admin.categories.update',$category) }}" method="POST">
+<form action="{{ route($routeList['update'],$category) }}" method="POST">
     @csrf
     @method('PUT')
     <div class="card shadow mb-4">
@@ -86,7 +86,7 @@
         <div class="card-footer">
             <button name="task" value="save" type="submit" class="btn btn-success"><i class="far fa-save text-white-50"></i> {{ __('admin.save') }}</button>
             <button name="task" value="saveandexit" type="submit" class="btn btn-success"><i class="fas fa-file-export text-white-50"></i> {{ __('admin.saveandexit') }}</button>
-            <a href="{{ route('admin.categories.index') }}" class="btn btn-warning"><i class="far fa-window-close text-white-50"></i> {{ __('admin.cancel') }}</a>
+            <a href="{{ route($routeList['index']) }}" class="btn btn-warning"><i class="far fa-window-close text-white-50"></i> {{ __('admin.cancel') }}</a>
         </div>
     </div>
 </form>

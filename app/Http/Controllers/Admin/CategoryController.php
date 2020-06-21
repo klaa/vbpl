@@ -11,9 +11,22 @@ use stdClass;
 
 class CategoryController extends Controller
 {
+    public $type;
+    public $routeList;
     public function __construct()
     {
         $this->authorizeResource(Category::class);
+        $this->type = 'post';
+        $this->routeList = [
+            'datatable'     => 'admin.categories.datatable',
+            'index'         => 'admin.categories.index',
+            'create'        => 'admin.categories.create',
+            'store'         => 'admin.categories.store',
+            'edit'          => 'admin.categories.edit',
+            'update'        => 'admin.categories.update',
+            'destroy'       => 'admin.categories.destroy',
+            'publish'       => 'admin.categories.publish',
+        ];
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +35,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.categories.index');
+        return view('admin.categories.index',['routeList'=>$this->routeList]);
     }
 
     /**
@@ -32,8 +45,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('category_details')->where([['published',1],['category_type','post']])->get();
-        return view('admin.categories.create',compact('categories'));
+        $categories = Category::with('category_details')->where([['published',1],['category_type',$this->type]])->get();
+        return view('admin.categories.create',['categories'=>$categories,'routeList'=>$this->routeList]);
     }
 
     /**
@@ -44,13 +57,13 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if(empty($request->alias)) {            
+        if(empty($request->get('alias'))) {            
             $request->merge(['alias'=>Str::slug($request->name)]);
         }
-        $request->merge(['category_type'=>'post','language'=>'vn']);
+        $request->merge(['category_type'=>$this->type,'language'=>'vn']);
         $validatedData = $request->validate([
             'name'      => ['required'],
-            'alias'     => ['required','unique:category_details'],
+            'alias'     => ['required','unique:categories'],
         ]);
         
         $category = new Category($request->only(['parent_id','alias','published','category_type']));
@@ -62,10 +75,10 @@ class CategoryController extends Controller
             $msg = __('admin.action_failed');
             $msg_type = 'error';
         }
-        $routename = 'admin.categories.index';
+        $routename = $this->routeList['index'];
         $param = [];
         if($request->task=='save') {
-            $routename = 'admin.categories.edit';
+            $routename = $this->routeList['edit'];
             $param  = $category;
         }
         return redirect()->route($routename,$param)->with($msg_type,$msg);
@@ -92,8 +105,8 @@ class CategoryController extends Controller
     {
         $childlist = $category->getAllCategoriesByType();
         $childlist = $childlist->pluck('id')->all();
-        $categories = Category::with('category_details')->where([['published',1],['category_type','post']])->whereNotIn('id',$childlist)->get();
-        return view('admin.categories.edit',compact(['categories','category']));
+        $categories = Category::with('category_details')->where([['published',1],['category_type',$this->type]])->whereNotIn('id',$childlist)->get();
+        return view('admin.categories.edit',['categories'=>$categories,'category'=>$category,'routeList'=>$this->routeList]);
     }
 
     /**
@@ -108,10 +121,10 @@ class CategoryController extends Controller
         if(empty($request->alias)) {            
             $request->merge(['alias'=>Str::slug($request->name)]);
         }
-        $request->merge(['category_type'=>'post','language'=>'vn']);
+        $request->merge(['category_type'=>$this->type,'language'=>'vn']);
         $validatedData = $request->validate([
             'name'      => ['required'],
-            'alias'     => ['required','unique:category_details,alias,'.$category->id.',category_id'],
+            'alias'     => ['required','unique:categories,alias,'.$category->id.',id'],
         ]);
  
         if($category->update($request->only(['parent_id','alias','published','category_type']))) {
@@ -122,10 +135,10 @@ class CategoryController extends Controller
             $msg = __('admin.action_failed');
             $msg_type = 'error';
         }
-        $routename = 'admin.categories.index';
+        $routename = $this->routeList['index'];
         $param = [];
         if($request->task=='save') {
-            $routename = 'admin.categories.edit';
+            $routename = $this->routeList['edit'];
             $param  = $category;
         }
         return redirect()->route($routename,$param)->with($msg_type,$msg);
@@ -148,7 +161,7 @@ class CategoryController extends Controller
             $message = __('admin.action_failed');
             $message_state = 'error';
         }
-        return redirect()->route('admin.categories.index')->with($message_state,$message);
+        return redirect()->route($this->routeList['index'],['routeList'=>$this->routeList])->with($message_state,$message);
     }
     
     /**
@@ -157,14 +170,14 @@ class CategoryController extends Controller
      */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = Category::with('category_details')->where([['category_type','post']])->get()->map(function($item) {
-            $name   = '<a href="'.route('admin.categories.edit',$item).'">'.$item->category_details->first()->name.'</a>';
+        $items = Category::with('category_details')->where('category_type',$this->type)->get()->map(function($item) {
+            $name   = '<a href="'.route($this->routeList['edit'],$item).'">'.$item->category_details->first()->name.'</a>';
             if($item->published) {
-                $pbtn = '<a href="'.route('admin.categories.publish',$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
+                $pbtn = '<a href="'.route($this->routeList['publish'],$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
             }else{
-                $pbtn = '<a href="'.route('admin.categories.publish',$item).'" class="text-danger"><i class="far fa-times-circle"></i></a>';
+                $pbtn = '<a href="'.route($this->routeList['publish'],$item).'" class="text-danger"><i class="far fa-times-circle"></i></a>';
             }
-            $action = '<a href="'.route('admin.categories.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.categories.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';
+            $action = '<a href="'.route($this->routeList['edit'],$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route($this->routeList['destroy'],$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';
             return [$item->id,$name,$item->ordering,$pbtn,$action];
         });
         $response = new stdClass;
@@ -191,6 +204,6 @@ class CategoryController extends Controller
             $message = __('admin.action_failed');
             $message_state = 'error';
         }
-        return redirect()->route('admin.categories.index')->with($message_state,$message);
+        return redirect()->route($this->routeList['index'])->with($message_state,$message);
     }
 }

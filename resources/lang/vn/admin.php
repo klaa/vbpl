@@ -104,6 +104,13 @@ return [
     'product_variant_name'  => 'Tên loại',
     'update_product_success'=> 'Cập nhật sản phẩm thành công!',
     'product_deleted'       => 'Xóa sản phẩm :name thành công!',
+    'menu_management'       => 'Quản lý menu',
+    'menu'                  => 'Menu',
+    'menu_category'         => 'Danh mục menu',
+    'menu_category_list'    => 'Danh sách danh mục',
+    'menu_category_create'  => 'Tạo danh mục menu mới',
+    'menu_list'             => 'Danh sách menu',
+    'menu_create'           => 'Tạo menu mới',
     
     'paginate_first'        => '<<',
     'paginate_last'         => '>>',

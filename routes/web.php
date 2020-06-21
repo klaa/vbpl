@@ -52,6 +52,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->
         Route::get('datatable','ProductController@getDatatable')->name('datatable');
         Route::any('/{post}/publish','ProductController@publish')->name('publish');
     });
+
+    Route::prefix('menucategories')->name('menucategories.')->group(function() {
+        Route::get('datatable','MenuCategoryController@getDatatable')->name('datatable');
+        Route::any('/{post}/publish','MenuCategoryController@publish')->name('publish');
+    });
     
     // Resource shoud be placed behind static
     Route::resource('users','UserController');    
@@ -61,6 +66,7 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->
     Route::resource('categories','CategoryController');        
     Route::resource('posts','PostController');        
     Route::resource('products','ProductController');        
+    Route::resource('menucategories','MenuCategoryController');        
 });
 
 

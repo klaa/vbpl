@@ -9,7 +9,7 @@
         $(document).ready(function() {
             //For data table
             $('#dataTable').DataTable({
-                "ajax": "{{ route('admin.categories.datatable') }}",
+                "ajax": "{{ route($routeList['datatable']) }}",
                 "deferRender": true,
                 "order": [],
                 "language": {
@@ -51,7 +51,7 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ __('admin.post_category') }}</h1>
         <div class="btnwrapper">
-            <a href="{{ route('admin.categories.create') }}" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-users fa-sm text-white-50"></i> {{ __('admin.group_create') }}</a>
+            <a href="{{ route($routeList['create']) }}" class="btn btn-sm btn-success shadow-sm"><i class="fas fa-users fa-sm text-white-50"></i> {{ __('admin.group_create') }}</a>
         </div>
     </div>    
 @endsection

@@ -2,13 +2,15 @@
 
 namespace App;
 
+use App\Scopes\CategoryTypeScope;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['parent_id','published','category_type','ordering'];
+    protected $table = 'categories';
+    protected $fillable = ['parent_id','alias','published','category_type','ordering'];
     public function category_details() {
-        return $this->hasMany('App\CategoryDetail');
+        return $this->hasMany('App\CategoryDetail','category_id','id');
     }
     public function posts() {
         return $this->hasMany('App\Post');

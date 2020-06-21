@@ -76,6 +76,24 @@
       </div>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
+        <i class="fas fa-fw fa-bars"></i>
+        <span>{{ __('admin.menu_management') }}</span>
+      </a>
+      <div id="collapseMenu" class="collapse" aria-labelledby="headingMenu" data-parent="#accordionSidebar">
+        <div class="bg-white py-2 collapse-inner rounded">
+          <h6 class="collapse-header">{{ __('admin.menu_category') }}:</h6>
+          <a class="collapse-item" href="{{ route('admin.menucategories.index') }}">{{ __('admin.menu_category_list') }}</a>
+          <a class="collapse-item" href="{{ route('admin.menucategories.create') }}">{{ __('admin.menu_category_create') }}</a>
+
+          <h6 class="collapse-header">{{ __('admin.menu') }}:</h6>          
+          <a class="collapse-item" href="{{ route('admin.posts.index') }}">{{ __('admin.menu_list') }}</a>
+          <a class="collapse-item" href="{{ route('admin.posts.create') }}">{{ __('admin.menu_create') }}</a>
+        </div>
+      </div>
+    </li>
+
     @if(config('app.shop_enabled'))
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProduct" aria-expanded="true" aria-controls="collapseProduct">
