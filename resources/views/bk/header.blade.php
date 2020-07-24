@@ -329,7 +329,7 @@
 <li><a href="http://sdh.tnu.edu.vn/">Cổng thông tin tuyển sinh SĐH</a></li>
 </ul>
 </div>
-<div class="col-md-4"><img src="http://www.tnu.edu.vn/img/logoTop.png" width="195" height="60"></div>
+<div class="col-md-4"><img src="http://tnu.edu.vn/img/logoTop.png" width="195" height="60"></div>
 </div>
 </div>
 </div>

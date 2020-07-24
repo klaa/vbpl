@@ -13,10 +13,10 @@
             <div class="col">
                 <ul class="typenav nav nav-pills">
                     <li class="nav-item mr-1">
-                        <a class="nav-link active" id="nav-vbnn-tab" data-toggle="tab" data-type="vbnn" href="#nav-vbnn" role="tab" aria-controls="nav-vbnn" aria-selected="true">Văn bản nhà nước</a>
+                        <a class="nav-link @if(!request()->filled('vbt')) active @endif" id="nav-vbnn-tab" data-toggle="tab" data-type="vbnn" href="#nav-vbnn" role="tab" aria-controls="nav-vbnn" aria-selected="true">Văn bản nhà nước</a>
                     </li>
                     <li class="nav-item">    
-                        <a class="nav-link" id="nav-vbt-tab" data-toggle="tab" data-type="vbt" href="#nav-vbt" role="tab" aria-controls="nav-vbt" aria-selected="false">Văn bản trường</a>
+                        <a class="nav-link @if(request()->filled('vbt')) active @endif" id="nav-vbt-tab" data-toggle="tab" data-type="vbt" href="#nav-vbt" role="tab" aria-controls="nav-vbt" aria-selected="false">Văn bản trường</a>
                     </li>    
                 </ul>
                 <div class="filterForm mt-2">
@@ -62,10 +62,10 @@
                     </form>
                 </div>
                 <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-vbnn" role="tabpanel" aria-labelledby="nav-vbnn-tab">
+                    <div class="tab-pane fade @if(!request()->filled('vbt')) show active @endif" id="nav-vbnn" role="tabpanel" aria-labelledby="nav-vbnn-tab">
                         @include('bk.listvb',['type'=>'vbnn','data'=>$vbnn])
                     </div>
-                    <div class="tab-pane fade" id="nav-vbt" role="tabpanel" aria-labelledby="nav-vbt-tab">
+                    <div class="tab-pane fade @if(request()->filled('vbt')) show active @endif" id="nav-vbt" role="tabpanel" aria-labelledby="nav-vbt-tab">
                         @include('bk.listvb',['type'=>'vbt','data'=>$vbt])
                     </div>
                 </div>
