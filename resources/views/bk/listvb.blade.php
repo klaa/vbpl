@@ -27,7 +27,7 @@
                                 Có hiệu lực
                         @endswitch
                     </td>
-                    <td><a href="{{ asset($post->vanban) }}" class="circle"><img src="{{ asset('images/ui.png') }}" alt="Tải xuống" title="Tải xuống"></a></td>
+                    <td><a href="{{ asset($item->vanban) }}" class="circle"><img src="{{ asset('images/ui.png') }}" alt="Tải xuống" title="Tải xuống"></a></td>
                 </tr>
             @endforeach
         </tbody>
