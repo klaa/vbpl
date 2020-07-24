@@ -16,7 +16,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'body'      => $faker->paragraph,
         'alias'     => $faker->unique()->slug,
         'vanban'    => $faker->randomElement(['documents/505.pdf','documents/505.docx']),
-        'kyhieu'    => $faker->bothify('##?#?##?#?#?#?#?-#?#?##???#??'),
+        'kyhieu'    => $faker->bothify('###-??-?##??'),
         'trangthai' => $faker->randomElement([0,1,2]),
         'ngaybanhanh'=>$faker->date(),
         'hieulucvb' => $faker->date(),

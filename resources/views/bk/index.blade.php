@@ -35,10 +35,10 @@
                             </div>
                             <div class="form-group col">
                                 <label for="nothins" class="d-none d-lg-block">&nbsp;</label>
-                                <button type="button" class="btn btn-block btn-outline-info btn-sm">Tìm kiếm nâng cao</button>
+                                <button type="button" data-toggle="collapse" data-target=".advancedsearch" class="btn btn-block btn-outline-info btn-sm">Tìm kiếm nâng cao</button>
                             </div>
                         </div>
-                        <div class="form-row">
+                        <div class="form-row collapse advancedsearch">
                             <div class="form-group col">
                                 <label for="frmNgaybanhanh">Ngày ban hành</label>
                                 <input type="date" name="ngaybanhanh" class="form-control form-control-sm" value="{{ request()->get('ngaybanhanh') }}">   
