@@ -68,7 +68,7 @@
                         <tr>
                             <th>ID</th>
                             <th>{{ __('admin.name') }}</th>
-                            <th>{{ __('admin.ordering') }}</th>
+                            <th>{{ __('admin.kyhieuvb') }}</th>
                             <th>{{ __('admin.published') }}</th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>
@@ -77,7 +77,7 @@
                         <tr>
                             <th>ID</th>
                             <th>{{ __('admin.name') }}</th>
-                            <th>{{ __('admin.ordering') }}</th>
+                            <th>{{ __('admin.kyhieuvb') }}</th>
                             <th>{{ __('admin.published') }}</th>
                             <th>{{ __('admin.action') }}</th>
                         </tr>

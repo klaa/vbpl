@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreatePostsTable extends Migration
 {
@@ -16,7 +17,18 @@ class CreatePostsTable extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('alias');
+            $table->string('name');
+            $table->text('body');
+            $table->string('keywords')->nullable();
+            $table->text('desc')->nullable();
+            $table->string('title')->nullable(); 
             $table->string('post_type');
+            $table->string('vanban');
+            $table->string('kyhieu');
+            $table->tinyInteger('trangthai')->default(1);
+            $table->date('ngaybanhanh');            
+            $table->date('hieulucvb');            
+            $table->string('post_type_2')->default('vbnn');
             $table->unsignedBigInteger('category_id');
             $table->tinyInteger('published')->default(1);            
             $table->unsignedBigInteger('user_id');
@@ -25,6 +37,8 @@ class CreatePostsTable extends Migration
             $table->timestamps();
             $table->unique(['alias','post_type']);
         });
+        DB::statement('ALTER TABLE posts ADD FULLTEXT `post_fts_body` (`body`)');
+        DB::statement('ALTER TABLE posts ADD FULLTEXT `post_fts_name` (`name`)');
     }
 
     /**

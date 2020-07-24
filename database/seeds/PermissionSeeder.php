@@ -44,11 +44,5 @@ class PermissionSeeder extends Seeder
         DB::table('permissions')->insert(['name'=>'Create Category','alias'=>'category-create','type'=>'category']);
         DB::table('permissions')->insert(['name'=>'Edit Category','alias'=>'category-update','type'=>'category']);
         DB::table('permissions')->insert(['name'=>'Delete Category','alias'=>'category-delete','type'=>'category']);
-
-        DB::table('permissions')->insert(['name'=>'View Product List','alias'=>'product-viewAny','type'=>'product']);
-        DB::table('permissions')->insert(['name'=>'View Product Detail','alias'=>'product-view','type'=>'product']);
-        DB::table('permissions')->insert(['name'=>'Create Product','alias'=>'product-create','type'=>'product']);
-        DB::table('permissions')->insert(['name'=>'Edit Product','alias'=>'product-update','type'=>'product']);
-        DB::table('permissions')->insert(['name'=>'Delete Product','alias'=>'product-delete','type'=>'product']);
     }
 }

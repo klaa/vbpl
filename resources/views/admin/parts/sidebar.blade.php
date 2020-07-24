@@ -6,7 +6,7 @@
       <div class="sidebar-brand-icon">
           <i class="fas fa-school"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">{{ config('app.name') }} <sup>0.3</sup></div>
+      <div class="sidebar-brand-text mx-3">VBPL <sup>1.0</sup></div>
     </a>
 
     <!-- Divider -->
@@ -51,8 +51,8 @@
           <a class="collapse-item {{ request()->routeIs('admin.permissions.index')?'active':'' }}" href="{{ route('admin.permissions.index') }}">{{ __('admin.group_permission') }}</a>
           <a class="collapse-item {{ request()->routeIs('admin.permissions.create')?'active':'' }}" href="{{ route('admin.permissions.create') }}">{{ __('admin.permission_create') }}</a>
           <div class="collapse-divider"></div>
-          <h6 class="collapse-header">{{ __('admin.other_task') }}:</h6>
-          <a class="collapse-item" href="#">{{ __('admin.send_notification') }}</a>
+          {{-- <h6 class="collapse-header">{{ __('admin.other_task') }}:</h6>
+          <a class="collapse-item" href="#">{{ __('admin.send_notification') }}</a> --}}
         </div>
       </div>
     </li>
@@ -76,6 +76,7 @@
       </div>
     </li>
 
+    @if(config('app.menu_enabled'))
     <li class="nav-item">
       <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseMenu" aria-expanded="true" aria-controls="collapseMenu">
         <i class="fas fa-fw fa-bars"></i>
@@ -93,6 +94,7 @@
         </div>
       </div>
     </li>
+    @endif
 
     @if(config('app.shop_enabled'))
     <li class="nav-item">

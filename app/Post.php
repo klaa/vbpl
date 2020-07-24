@@ -9,12 +9,9 @@ class Post extends Model
 {
     public $timestamps = true;
     protected $table = 'posts';
-    protected $fillable = ['category_id','alias','published','user_id','is_featured','ordering','post_type'];
+    protected $fillable = ['category_id','alias','published','user_id','is_featured','ordering','post_type','vanban','kyhieu','trangthai','ngaybanhanh','hieulucvb','post_type_2','name','body','desc','keywords','title'];
     public function category() {
         return $this->belongsTo('App\Category');
-    }
-    public function post_details() {
-        return $this->hasMany('App\PostDetail','post_id','id');
     }
     public function user() {
         return $this->belongsTo('App\User');
@@ -26,16 +23,22 @@ class Post extends Model
     {
         static::addGlobalScope(new PostTypeScope);
     }
-    public function getRouteKeyName()
-    {
-        return 'alias';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'alias';
+    // }
     public function ruleForCreating() {
         return [
             'name'                  => 'required',
             'alias'                 => 'required|unique:posts',
             'category_id'           => 'numeric',
             'body'                  => 'required',
+            'vanban'                => 'required|string',
+            'kyhieu'                => 'required|string',
+            'trangthai'             => 'nullable|numeric',
+            'ngaybanhanh'           => 'required|date',
+            'hieulucvb'             => 'required|date',
+            'post_type_2'           => 'nullable|string',
             'published'             => 'numeric',
             'is_featured'           => 'numeric',
             'ordering'              => 'nullable|numeric',

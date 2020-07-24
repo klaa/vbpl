@@ -74,9 +74,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="pills-details-tab" data-toggle="tab" href="#pills-details" role="tab" aria-controls="pills-details" aria-selected="true">{{ __('admin.details') }}</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" id="pills-media-tab" data-toggle="tab" href="#pills-media" role="tab" aria-controls="pills-media" aria-selected="true">{{ __('admin.media') }}</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" id="pills-seo-tab" data-toggle="tab" href="#pills-seo" role="tab" aria-controls="pills-seo" aria-selected="false">{{ __('admin.metadata') }}</a>
                 </li>
@@ -89,12 +89,41 @@
                         <div class="form-group col">
                             <label for="formName">{{ __('admin.name') }}</label>
                             <input type="text" name="name" value="{{ old('name') }}" class="form-control @error('name') is-invalid @enderror" id="formName" aria-describedby="nameHelp" required autofocus>
-                            {{-- <small id="nameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="formKyhieu">{{ __('admin.kyhieuvb') }}</label>
+                            <input type="text" name="kyhieu" value="{{ old('kyhieu') }}" class="form-control @error('kyhieu') is-invalid @enderror" id="formKyhieu" aria-describedby="kyhieuHelp" required>
                         </div>
                         <div class="form-group col">
-                            <label for="formAlias">{{ __('admin.alias') }}</label>
-                            <input type="text" name="alias" value="{{ old('alias') }}" class="form-control @error('alias') is-invalid @enderror" id="formAlias" aria-describedby="aliasHelp">
-                            {{-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+                            <label>{{ __('admin.trangthai') }}</label>
+                            <select name="trangthai" class="form-control @error('trangthai') is-invalid @enderror">
+                                <option @if(old('trangthai')==1) selected @endif value="1">{{ __('admin.conhieuluc') }}</option>
+                                <option @if(old('trangthai')==0) selected @endif value="0">{{ __('admin.hethieuluc') }}</option>
+                                <option @if(old('trangthai')==2) selected @endif value="2">{{ __('admin.chuacohieuluc') }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="formNgaybanhanh">{{ __('admin.ngaybanhanh') }}</label>
+                            <input type="date" name="ngaybanhanh" value="{{ old('ngaybanhanh') }}" class="form-control @error('ngaybanhanh') is-invalid @enderror" id="formNgaybanhanh">
+                        </div>
+                        <div class="form-group col">
+                            <label for="formHieulucvb">{{ __('admin.hieulucvb') }}</label>
+                            <input type="date" name="hieulucvb" value="{{ old('hieulucvb') }}" class="form-control @error('hieulucvb') is-invalid @enderror" id="formHieulucvb">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>{{ __('admin.filevb') }}</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span id="button-image" class="btn btn-info">{{ __('admin.media_add') }}</span>
+                                </div>
+                                <input type="text" id="mediaAdd" class="form-control @error('vanban') is-invalid @enderror" name="vanban" value="{{ old('vanban') }}" aria-label="Image" aria-describedby="button-image">
+                            </div>
                         </div>
                     </div>
                     <div class="form-row">
@@ -102,8 +131,17 @@
                             <label>{{ __('admin.post_category') }}</label>
                             <select name="category_id" class="form-control @error('category_id') is-invalid @enderror">
                                 @foreach ($categories as $item)
-                                    <option value="{{ $item->id }}">{{ $item->category_details->first()->name }}</option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
                                 @endforeach
+                            </select>
+                        </div>               
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label>Loại văn bản</label>
+                            <select name="post_type_2" class="form-control @error('post_type_2') is-invalid @enderror">
+                                <option @if(old('post_type_2')=='vbnn') selected @endif value="vbnn">Văn bản nhà nước</option>
+                                <option @if(old('post_type_2')=='vbt') selected @endif value="vbt">Văn bản trường</option>
                             </select>
                         </div>               
                     </div>
@@ -114,10 +152,10 @@
                         </div>
                     </div>
                     <div class="form-row">
-                        <div class="col-6 form-group">
+                        {{-- <div class="col-6 form-group">
                             <label for="itemOrdering">{{ __('admin.ordering') }}</label>
                             <input type="number" name="ordering" id="itemOrdering" class="form-control" value="{{ old('ordering')?old('ordering'):0 }}">
-                        </div>
+                        </div> --}}
                         <div class="col-3 form-group">
                             <label for="itemPublished">{{ __('admin.published') }}</label>
                             <div class="form-control border-0 px-0">
@@ -131,7 +169,7 @@
                                 </div>
                             </div> 
                         </div>
-                        <div class="col-3 form-group">
+                        {{-- <div class="col-3 form-group">
                             <label for="itemFeatured">{{ __('admin.is_featured') }}</label>
                             <div class="form-control border-0 px-0">
                                 <div class="form-check form-check-inline">
@@ -143,39 +181,16 @@
                                     <label class="form-check-label" for="featureNo">{{ __('admin.no') }}</label>
                                 </div>
                             </div> 
-                        </div>
+                        </div> --}}
                     </div>
-                </div>
-                <div class="tab-pane" id="pills-media" role="tabpanel" aria-labelledby="pills-media-tab">
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <label for="itemMediaShowType">{{ __('admin.media_show_type') }}</label>
-                            <div class="form-control border-0 px-0">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="media_display" id="mediaShowCarousel" value="0" checked>
-                                    <label class="form-check-label" for="mediaShowCarousel">{{ __('admin.media_show_carousel') }}</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="media_display" id="mediaShowGallery" value="1">
-                                    <label class="form-check-label" for="mediaShowGallery">{{ __('admin.media_show_gallery') }}</label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col">
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span id="button-image" class="btn btn-info">{{ __('admin.media_add') }}</span>
-                                </div>
-                                <input type="text" id="mediaAdd" class="form-control" name="media_add" aria-label="Image" aria-describedby="button-image">
-                            </div>
-                        </div>
-                    </div>
-                    <div id="mediaList" class="row">
-                    </div>                    
                 </div>
                 <div class="tab-pane" id="pills-seo" role="tabpanel" aria-labelledby="pills-seo-tab">
+                    <div class="form-row">
+                        <div class="form-group col">
+                            <label for="formAlias">{{ __('admin.alias') }}</label>
+                            <input type="text" name="alias" value="{{ old('alias') }}" class="form-control @error('alias') is-invalid @enderror" id="formAlias" aria-describedby="aliasHelp">
+                        </div>
+                    </div>
                     <div class="form-row">
                         <div class="form-group col">
                             <label for="itemTitle">{{ __('admin.title') }}</label>

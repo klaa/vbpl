@@ -45,7 +45,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('category_details')->where([['published',1],['category_type',$this->type]])->get();
+        $categories = Category::where([['published',1],['category_type',$this->type]])->get();
         return view('admin.categories.create',['categories'=>$categories,'routeList'=>$this->routeList]);
     }
 
@@ -66,9 +66,9 @@ class CategoryController extends Controller
             'alias'     => ['required','unique:categories'],
         ]);
         
-        $category = new Category($request->only(['parent_id','alias','published','category_type']));
+        $category = new Category($request->only(['parent_id','alias','published','category_type','name','desc','keywords','title']));
         if($category->save()) {
-            $category->category_details()->create($request->only(['name','desc','keywords','title','language']));
+            // $category->category_details()->create($request->only(['name','desc','keywords','title','language']));
             $msg = __('admin.update_category_success');
             $msg_type = 'success';
         }else{
@@ -105,7 +105,7 @@ class CategoryController extends Controller
     {
         $childlist = $category->getAllCategoriesByType();
         $childlist = $childlist->pluck('id')->all();
-        $categories = Category::with('category_details')->where([['published',1],['category_type',$this->type]])->whereNotIn('id',$childlist)->get();
+        $categories = Category::where([['published',1],['category_type',$this->type]])->whereNotIn('id',$childlist)->get();
         return view('admin.categories.edit',['categories'=>$categories,'category'=>$category,'routeList'=>$this->routeList]);
     }
 
@@ -127,8 +127,8 @@ class CategoryController extends Controller
             'alias'     => ['required','unique:categories,alias,'.$category->id.',id'],
         ]);
  
-        if($category->update($request->only(['parent_id','alias','published','category_type']))) {
-            $category->category_details()->update($request->only(['name','desc','keywords','title','language']));
+        if($category->update($request->only(['parent_id','alias','published','category_type','name','desc','keywords','title']))) {
+            // $category->category_details()->update($request->only(['name','desc','keywords','title','language']));
             $msg = __('admin.update_category_success');
             $msg_type = 'success';
         }else{
@@ -152,7 +152,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $name = $category->category_details->first()->name;
+        $name = $category->name;
         DB::table('category_details')->where('category_id','=',$category->id)->delete();
         if($category->delete()) {
             $message = __('admin.category_deleted',compact('name'));
@@ -170,8 +170,8 @@ class CategoryController extends Controller
      */
     public function getDatatable() {
         $this->authorize('viewAny',auth()->user());
-        $items = Category::with('category_details')->where('category_type',$this->type)->get()->map(function($item) {
-            $name   = '<a href="'.route($this->routeList['edit'],$item).'">'.$item->category_details->first()->name.'</a>';
+        $items = Category::where('category_type',$this->type)->get()->map(function($item) {
+            $name   = '<a href="'.route($this->routeList['edit'],$item).'">'.$item->name.'</a>';
             if($item->published) {
                 $pbtn = '<a href="'.route($this->routeList['publish'],$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
             }else{

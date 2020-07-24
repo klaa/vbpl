@@ -11,9 +11,9 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Product::class,100)->create()->each(function($item) {
-            $item->post_details()->save(factory(App\PostDetail::class)->make());
-            $item->product_details()->saveMany([factory(App\ProductDetail::class)->make(),factory(App\ProductDetail::class)->make(),factory(App\ProductDetail::class)->make()]);
-        });
+        // factory(App\Product::class,100)->create()->each(function($item) {
+        //     $item->post_details()->save(factory(App\PostDetail::class)->make());
+        //     $item->product_details()->saveMany([factory(App\ProductDetail::class)->make(),factory(App\ProductDetail::class)->make(),factory(App\ProductDetail::class)->make()]);
+        // });
     }
 }

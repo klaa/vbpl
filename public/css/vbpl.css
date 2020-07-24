@@ -1,0 +1,41 @@
+::-webkit-input-placeholder {
+    font-style: italic;
+ }
+ :-moz-placeholder {
+    font-style: italic;  
+ }
+ ::-moz-placeholder {
+    font-style: italic;  
+ }
+ :-ms-input-placeholder {  
+    font-style: italic; 
+ }
+.social a {
+    background: #f1f1f1;
+    border: 1px solid #726f6f;
+    line-height: 26px;
+}
+.brandwrap {
+    align-items: center;
+}
+.navbar-nav li:hover > .dropdown-menu {
+    padding-top: 15px;
+    background: #fff;
+}
+#header {
+    background-image: url('../images/bgrTop.jpg');
+}
+body {
+    background-image: url('../images/background2.jpg');
+}
+.typenav.nav-pills .nav-link {
+    border: 1px solid rgba(0,0,0,0.2);
+    text-transform: uppercase;
+}
+.dropdown-toggle::after {
+    content: none;
+}
+.btn-white-border {
+    border: 1px solid #ced4da;
+    background-color: #fff;
+} 

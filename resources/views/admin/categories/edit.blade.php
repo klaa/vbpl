@@ -1,6 +1,6 @@
 @extends('admin.dashboard')
 
-@section('pagetitle',__('admin.category_edit',['name'=>$category->category_details->first()->name]))
+@section('pagetitle',__('admin.category_edit',['name'=>$category->name]))
 
 @push('scripts')
     <script type="text/javascript">
@@ -25,13 +25,13 @@
     @method('PUT')
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">{{ __('admin.category_edit',['name'=>$category->category_details->first()->name]) }}</h6>
+          <h6 class="m-0 font-weight-bold text-primary">{{ __('admin.category_edit',['name'=>$category->name]) }}</h6>
         </div>
         <div class="card-body">                
             <div class="form-row">
                 <div class="form-group col">
                     <label for="formName">{{ __('admin.name') }}</label>
-                    <input type="text" name="name" value="{{ $category->category_details->first()->name }}" class="form-control @error('name') is-invalid @enderror" id="formName" aria-describedby="nameHelp" required autofocus>
+                    <input type="text" name="name" value="{{ $category->name }}" class="form-control @error('name') is-invalid @enderror" id="formName" aria-describedby="nameHelp" required autofocus>
                     {{-- <small id="nameHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
                 </div>
                 <div class="form-group col">
@@ -46,7 +46,7 @@
                     <select name="parent_id" class="form-control @error('parent_id') is-invalid @enderror">
                         <option @if($category->parent_id==0) selected @endif value="0">{{ __('admin.no_parent') }}</option>
                         @foreach ($categories as $item)
-                            <option @if($category->parent_id==$item->id) selected @endif value="{{ $item->id }}">{{ $item->category_details->first()->name }}</option>
+                            <option @if($category->parent_id==$item->id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -67,19 +67,19 @@
             <div class="form-row">
                 <div class="form-group col">
                     <label for="itemTitle">{{ __('admin.title') }}</label>
-                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="itemTitle" name="title" value="{{ $category->category_details->first()->title }}">
+                    <input type="text" class="form-control @error('title') is-invalid @enderror" id="itemTitle" name="title" value="{{ $category->title }}">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
                     <label for="itemKeywords">{{ __('admin.keywords') }}</label>
-                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="itemKeywords" name="keywords" value="{{ $category->category_details->first()->keywords }}">
+                    <input type="text" class="form-control @error('keywords') is-invalid @enderror" id="itemKeywords" name="keywords" value="{{ $category->keywords }}">
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col">
                     <label for="itemDesc">{{ __('admin.desc') }}</label>
-                    <textarea name="desc" class="form-control @error('desc') is-invalid @enderror" id="itemDesc" rows="5">{{ $category->category_details->first()->desc }}</textarea>
+                    <textarea name="desc" class="form-control @error('desc') is-invalid @enderror" id="itemDesc" rows="5">{{ $category->desc }}</textarea>
                 </div>
             </div>
         </div>

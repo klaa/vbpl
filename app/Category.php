@@ -8,10 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     protected $table = 'categories';
-    protected $fillable = ['parent_id','alias','published','category_type','ordering'];
-    public function category_details() {
-        return $this->hasMany('App\CategoryDetail','category_id','id');
-    }
+    protected $fillable = ['parent_id','alias','published','category_type','ordering','name','desc','keywords','title'];
     public function posts() {
         return $this->hasMany('App\Post');
     }

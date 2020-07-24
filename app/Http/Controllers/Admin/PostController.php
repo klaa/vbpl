@@ -34,7 +34,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::with('category_details')->where([['published','=',1]])->get();
+        $categories = Category::where([['published','=',1]])->get();
         return view('admin.posts.create',compact('categories'));
     }
 
@@ -55,14 +55,8 @@ class PostController extends Controller
         $request->merge(['post_type'=>'post','language'=>'vn']);
         $post = new Post();
         $validatedData = $request->validate($post->ruleForCreating());
-        $post->__construct($request->only(['category_id','alias' ,'published','user_id','post_type','is_featured','ordering']));
+        $post->__construct($request->only(['category_id','alias' ,'published','user_id','post_type','is_featured','ordering','post_type_2','hieulucvb','ngaybanhanh','trangthai','kyhieu','vanban','name','body','desc','keywords','title']));
         if($post->save()) {
-            $post->post_details()->create($request->only(['name','body','desc','keywords','title','language']));
-            foreach ($request->get('medialist') as $key => $value) {
-                $media = new Media;
-                $media->link = $value;
-                $post->media()->save($media);
-            }
             $msg = __('admin.update_post_success');
             $msg_type = 'success';
         }else{
@@ -97,7 +91,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::with('category_details')->where([['published','=',1],['category_type','=','post']])->get();
+        $categories = Category::where([['published','=',1],['category_type','=','post']])->get();
         return view('admin.posts.edit',compact(['categories','post']));
     }
 
@@ -117,16 +111,7 @@ class PostController extends Controller
 
         $validatedData = $request->validate($post->ruleForEditting());
         
-        if($post->update($request->only(['category_id','alias', 'published','is_featured','ordering']))) {
-            $post->post_details()->update($request->only(['name','body','desc','keywords','title','language']));
-            
-            $post->media()->delete();
-            foreach ($request->get('medialist') as $key => $value) {
-                $media = new Media;
-                $media->link = $value;
-                $post->media()->save($media);
-            }
-            
+        if($post->update($request->only(['category_id','alias', 'published','is_featured','ordering','post_type_2','hieulucvb','ngaybanhanh','trangthai','kyhieu','vanban','name','body','desc','keywords','title']))) {
             $msg = __('admin.update_post_success');
             $msg_type = 'success';
         }else{
@@ -150,8 +135,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        $name = $post->post_details->first()->name;
-        DB::table('post_details')->where('post_id','=',$post->id)->delete();
+        $name = $post->name;
         if($post->delete()) {
             $message = __('admin.post_deleted',compact('name'));
             $message_state = 'success';
@@ -174,16 +158,16 @@ class PostController extends Controller
                 $params[] = ['user_id','=',$user->id];
             }    
         }
-        $items = Post::where($params)->with('post_details')->get();
+        $items = Post::where($params)->get();
         $items = $items->map(function($item) {
-            $name   = '<a href="'.route('admin.posts.edit',$item).'">'.$item->post_details->first()->name.'</a>';
+            $name   = '<a href="'.route('admin.posts.edit',$item).'">'.$item->name.'</a>';
             if($item->published) {
                 $pbtn = '<a href="'.route('admin.posts.publish',$item).'" class="text-success"><i class="far fa-check-circle"></i></a>';
             }else{
                 $pbtn = '<a href="'.route('admin.posts.publish',$item).'" class="text-danger"><i class="far fa-times-circle"></i></a>';
             }
             $action = '<a href="'.route('admin.posts.edit',$item).'" class="btn btn-info btn-sm"><i class="far fa-edit fa-sm"></i></a> <a data-action="'.route('admin.posts.destroy',$item).'" href="#deleteModal" data-toggle="modal" class="btn btn-danger btn-sm deleteButton"><i class="fas fa-trash fa-sm"></i></a>';
-            return [$item->id,$name,$item->ordering,$pbtn,$action];
+            return [$item->id,$name,$item->kyhieu,$pbtn,$action];
         });
         $response = new stdClass;
         $response->data = $items;

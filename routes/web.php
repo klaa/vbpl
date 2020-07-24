@@ -16,7 +16,8 @@ use Intervention\Image\Image;
 */
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::any('/', 'PostController@index')->name('home');
+Route::get('van-ban/{post}','PostController@show')->name('detail');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/','AdminController@dashboard')->name('dashboard');
