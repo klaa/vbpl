@@ -29,7 +29,7 @@
             <div id="searchwrap1" class="d-none d-lg-flex">
                 <form action="http://tnu.edu.vn/news/search" method="post" id="search1" name="search">
                     <div class="input-group input-group-sm">
-                        <input class="form-control" id="txtSearch" name="txtSearch" placeholder="Tìm kiếm..." type="text" value="">
+                        <input class="form-control" id="txtSearch2" name="txtSearch" placeholder="Tìm kiếm..." type="text" value="">
                         <div class="input-group-append">
                             <button class="btn btn-white-border" type="submit"><img src="{{ asset('images/search.png') }}" alt="Tim kiem"></button>
                         </div>

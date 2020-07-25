@@ -34,5 +34,5 @@
     </table>
 </div>
 <div class="d-flex justify-content-center">
-    {{$data->links()}}
+    {{$data->appends(request()->only(['keyword','category_id','ngaybanhanh','kyhieu']))->links()}}
 </div>

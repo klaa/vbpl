@@ -46,6 +46,7 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        $numberOfItems = 15;
         $linhvuc = Category::where('published',1)->get();
         $validatedFilter = $request->validate([
             'category_id'   => 'nullable|numeric',
@@ -65,11 +66,11 @@ class PostController extends Controller
         
         if($request->filled('keyword')) {
             $key = $this->fullTextWildcards($request->get('keyword'));
-            $vbnn = Post::where($vbnnFilter)->whereRaw("((MATCH (name) AGAINST (? IN BOOLEAN MODE)) > 0 OR (MATCH (body) AGAINST (? IN BOOLEAN MODE)) > 0)",[$key,$key])->orderByRaw("(MATCH (name) AGAINST (? IN BOOLEAN MODE)) ASC,(MATCH (body) AGAINST (? IN BOOLEAN MODE)) ASC",[$key,$key])->paginate(15,['*'],'vbnn');
-            $vbt  = Post::where($vbtFilter)->whereRaw("((MATCH (name) AGAINST (? IN BOOLEAN MODE)) > 0 OR (MATCH (body) AGAINST (? IN BOOLEAN MODE)) > 0)",[$key,$key])->orderByRaw("(MATCH (name) AGAINST (? IN BOOLEAN MODE)) ASC, (MATCH (body) AGAINST (? IN BOOLEAN MODE)) ASC",[$key,$key])->paginate(15,['*'],'vbt');
+            $vbnn = Post::where($vbnnFilter)->whereRaw("((MATCH (name) AGAINST (? IN BOOLEAN MODE)) > 0 OR (MATCH (body) AGAINST (? IN BOOLEAN MODE)) > 0)",[$key,$key])->orderByRaw("(MATCH (name) AGAINST (? IN BOOLEAN MODE)) ASC,(MATCH (body) AGAINST (? IN BOOLEAN MODE)) ASC",[$key,$key])->paginate($numberOfItems,['*'],'vbnn');
+            $vbt  = Post::where($vbtFilter)->whereRaw("((MATCH (name) AGAINST (? IN BOOLEAN MODE)) > 0 OR (MATCH (body) AGAINST (? IN BOOLEAN MODE)) > 0)",[$key,$key])->orderByRaw("(MATCH (name) AGAINST (? IN BOOLEAN MODE)) ASC, (MATCH (body) AGAINST (? IN BOOLEAN MODE)) ASC",[$key,$key])->paginate($numberOfItems,['*'],'vbt');
         }else{
-            $vbnn = Post::where($vbnnFilter)->paginate(15,['*'],'vbnn');
-            $vbt = Post::where($vbtFilter)->paginate(15,['*'],'vbt');
+            $vbnn = Post::where($vbnnFilter)->paginate($numberOfItems,['*'],'vbnn');
+            $vbt = Post::where($vbtFilter)->paginate($numberOfItems,['*'],'vbt');
         }        
 
         return view('bk.index',compact('vbnn','vbt','linhvuc'));

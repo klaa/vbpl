@@ -1,6 +1,16 @@
 @extends('bk.general')
 
 @section('pagetitle','Văn bản pháp luật')
+
+@push('js')
+    <script>
+        jQuery(document).ready(function() {
+            jQuery('#frmLinhVuc').on('change',function() {
+                jQuery('#formFilter').submit();      
+            });
+        });    
+    </script>    
+@endpush
     
 @section('maincontent')
     <div class="bg-info text-white">
@@ -20,7 +30,7 @@
                     </li>    
                 </ul>
                 <div class="filterForm mt-2">
-                    <form action="{{ route('home') }}" method="POST">
+                    <form action="{{ route('home') }}" method="POST" id="formFilter">
                         @csrf
                         <input type="hidden" name="post_type_2" value="vbnn">
                         <div class="form-row">
@@ -41,22 +51,23 @@
                         <div class="form-row collapse advancedsearch">
                             <div class="form-group col">
                                 <label for="frmNgaybanhanh">Ngày ban hành</label>
-                                <input type="date" name="ngaybanhanh" class="form-control form-control-sm" value="{{ request()->get('ngaybanhanh') }}">   
+                                <input id="frmNgaybanhanh" type="date" name="ngaybanhanh" class="form-control form-control-sm" value="{{ request()->get('ngaybanhanh') }}">   
                             </div>
                             <div class="form-group col">
                                 <label for="frmKyhieu">Ký hiệu</label>
-                                <input type="text" name="kyhieu" class="form-control form-control-sm" value="{{ request()->get('kyhieu') }}">
+                                <input id="frmKyhieu" type="text" name="kyhieu" class="form-control form-control-sm" value="{{ request()->get('kyhieu') }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col">
                                 <label for="frmKeyword">Từ khóa</label>
-                                <input name="keyword" type="text" class="form-control form-control-sm" value="{{ request()->get('keyword') }}">
+                                <input id="frmKeyword" name="keyword" type="text" class="form-control form-control-sm" value="{{ request()->get('keyword') }}">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col text-center">
                                 <button type="submit" class="btn btn-sm btn-outline-info px-5">Tìm kiếm</button>
+                                <a href="{{ route('home') }}" class="btn btn-sm btn-outline-warning px-5 resetbtn">Đặt lại</a>
                             </div>
                         </div>
                     </form>
