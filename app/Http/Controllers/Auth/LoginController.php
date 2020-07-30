@@ -61,7 +61,9 @@ class LoginController extends Controller
      * @param 
      */
     public function handleGoogleCallback() {
-        $tmpuser = Socialite::driver('google')->user();
+        $tmpuser = Socialite::driver('google')
+                    ->setHttpClient(new \GuzzleHttp\Client(['verify' => false]))
+                    ->user();
 
         $user = User::firstOrNew(['email'=>$tmpuser->getEmail()]);
 
