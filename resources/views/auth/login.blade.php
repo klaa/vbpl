@@ -52,7 +52,7 @@
                         </div>
                     <button type="submit" class="btn btn-primary btn-user btn-block">{{ __('auth.login') }}</button>
                     <hr>
-                    <a href="#" class="btn btn-google btn-user btn-block">
+                    <a href="{{ route('google-login') }}" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> {{__('auth.login_with_google')}}
                     </a>
                     <a href="#" class="btn btn-facebook btn-user btn-block">

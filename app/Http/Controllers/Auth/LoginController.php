@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Facades\Socialite;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -43,5 +46,25 @@ class LoginController extends Controller
         $email = request()->input('email');
         $field = filter_var($email,FILTER_VALIDATE_EMAIL)?'email':'username';
         return $field;
+    }
+
+    /**
+     * Redirect to Google 
+     * @return void
+     */
+    public function redirectToGoogle() {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Google login
+     * @param 
+     */
+    public function handleGoogleCallback() {
+        $tmpuser = Socialite::driver('google')->user();
+
+        $user = User::firstOrNew(['email'=>$tmpuser->getEmail()]);
+
+        dd($user);        
     }
 }
