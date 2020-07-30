@@ -18,8 +18,8 @@ Auth::routes();
 
 Route::any('/', 'PostController@index')->name('home');
 Route::get('van-ban/{post}','PostController@show')->name('detail');
-Route::get('login/google','LoginController@redirectToGoogle')->name('google-login');
-Route::get('google-login','LoginController@handleGoogleCallback')->name('google-callback');
+Route::get('login/google','Auth/LoginController@redirectToGoogle')->name('google-login');
+Route::get('google-login','Auth/LoginController@handleGoogleCallback')->name('google-callback');
 
 Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/','AdminController@dashboard')->name('dashboard');
