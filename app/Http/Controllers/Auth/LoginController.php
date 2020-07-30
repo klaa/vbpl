@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Laravel\Socialite\Facades\Socialite;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -67,6 +68,15 @@ class LoginController extends Controller
 
         $user = User::firstOrNew(['email'=>$tmpuser->getEmail()]);
 
-        dd($user);        
+        if(empty($user->id)) {
+            $user->username = $tmpuser->getNickname();
+            $user->name     = $tmpuser->getName();
+            $user->password = Str::random();
+            $user->save();   
+        }
+        
+        Auth::login($user);
+
+        return redirect()->route('home');
     }
 }
