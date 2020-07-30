@@ -69,7 +69,7 @@ class LoginController extends Controller
         $user = User::firstOrNew(['email'=>$tmpuser->getEmail()]);
 
         if(empty($user->id)) {
-            $user->username = $tmpuser->getNickname();
+            $user->username = 'guser-'.Str::random(6).time();
             $user->name     = $tmpuser->getName();
             $user->password = Str::random();
             $user->save();   
