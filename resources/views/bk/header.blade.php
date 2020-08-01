@@ -1,8 +1,8 @@
 <div id="header">
     <div class="container-fluid">
         <ul id="taskbar" class="list-inline pull-right d-flex">
-			<li class=""><a href="http://en.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_en.gif') }}"> English</a></li>
-            <li class=""><a href="http://cn.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_cn.gif') }}"> 中文</a></li>
+			<li class=""><a href="http://en.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_en.png') }}"> English</a></li>
+            <li class=""><a href="http://cn.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_cn.png') }}"> 中文</a></li>
             <li class=""><a href="http://kr.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/korea.png') }}"> 한국</a></li>
             <li><a href="http://tnu.edu.vn/">Home</a></li>
             <li><a href="http://tnu.edu.vn/account/login">Thông tin nội bộ</a></li>
