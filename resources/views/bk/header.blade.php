@@ -1,9 +1,9 @@
 <div id="header">
     <div class="container-fluid">
         <ul id="taskbar" class="list-inline pull-right d-flex">
-			<li class=""><a href="http://en.tnu.edu.vn/" target="_blank"><img src="http://tnu.edu.vn/img/flag_en.gif"> English</a></li>
-            <li class=""><a href="http://cn.tnu.edu.vn/" target="_blank"><img src="http://tnu.edu.vn/img/flag_cn.gif"> 中文</a></li>
-            <li class=""><a href="http://kr.tnu.edu.vn/" target="_blank"><img src="http://tnu.edu.vn/img/korea.png"> 한국</a></li>
+			<li class=""><a href="http://en.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_en.gif') }}"> English</a></li>
+            <li class=""><a href="http://cn.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/flag_cn.gif') }}"> 中文</a></li>
+            <li class=""><a href="http://kr.tnu.edu.vn/" target="_blank"><img src="{{ asset('images/korea.png') }}"> 한국</a></li>
             <li><a href="http://tnu.edu.vn/">Home</a></li>
             <li><a href="http://tnu.edu.vn/account/login">Thông tin nội bộ</a></li>
             <li><a href="http://tnu.edu.vn/home/sitemap">Site map</a></li>
@@ -19,11 +19,11 @@
         </ul>
         <div class="d-flex justify-content-between pt-2 brandwrap">
             <div class="webbrand">
-                <a data-scroll="" data-options="easing: easeInQuad" href="http://tnu.edu.vn/" class="navbar-brand"><img src="http://tnu.edu.vn/img/logoTop.png"></a>
+                <a data-scroll="" data-options="easing: easeInQuad" href="http://tnu.edu.vn/" class="navbar-brand"><img src="{{asset('images/logoTop.png')}}"></a>
             </div>
             <div class="navbar-toggle-button">
                 <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#mainnav" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <img src="http://tnu.edu.vn/img/bar.png" alt="Main menu toggle">
+                    <img src="{{asset('images/bar.png')}}" alt="Main menu toggle">
                 </button>                
             </div>
             <div id="searchwrap1" class="d-none d-lg-flex">
